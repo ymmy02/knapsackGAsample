@@ -6,18 +6,32 @@ Language : Python
 
 ## Input
 
-capacity >  
-Items >  
+```
+capacity > (Int)
+Items > (weight), (value) 
+```
 
 ex)  
-capacity > 30
-items > 1, 10, 4, 9, 6, 2, 5, 13, 4, 7
+```
+capacity > 15
+items > 4, 4
+items > 10, 11
+items > 3, 6
+items > 2, 1
+items > 7, 9
+```
 
 ## Output
 
-amount >  
+```
+amount >
+value  > 
 result >
+```
 
 ex)  
-amount > 29    
-result > [1, 0, 1, 1, 1, 0, 1, 0, 1, 0]
+```
+amount > 14
+value  > 19
+result > [1, 0, 1, 0, 1]
+```
