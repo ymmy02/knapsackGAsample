@@ -10,6 +10,7 @@ def main():
   presentge = []
   nextge = []
   ops = Operators()
+  random.seed()
 
   # Input
   #capacity = int(input("capacity : "))
@@ -34,23 +35,21 @@ def main():
     nextge = ops.select_tounament(presentge)
     
     # Crossover
-    pool = []
-    pool.append(nextge[0:Const.GENERATION_SIZE/2])
-    pool.append(nextge[Const.GENERATION_SIZE/2:])
-    nextge = ops.two_point_crossover(pool)
+    nextge = ops.two_point_crossover(nextge)
 
     # Mutation
     nextge = ops.mutate(nextge)
 
     # Change Generation
     presentge = nextge[:]
-    del nextge[:]
 
     # Calculate Value
     best_indv = presentge[0]
     best_indv.evaluate(evaluationfunc)
+    s = 0
     for indv in presentge:
       indv.evaluate(evaluationfunc)
+      s += indv.getvalue()
       if indv.getvalue() > best_indv.getvalue():
         best_indv = indv
 
@@ -61,6 +60,8 @@ def main():
     print "Best value : " + str(best_indv.getvalue())
     print "Chromosome"
     print best_indv.chromosome
+    # test
+    print "Sum : " + str(s)
 
     loopcount += 1
 

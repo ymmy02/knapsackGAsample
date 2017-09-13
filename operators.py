@@ -49,9 +49,9 @@ class Operators(object):
     tmp1[point1:point2], tmp2[point1:point2] = tmp2[point1:point2].copy(), tmp1[point1:point2].copy()
     return tmp1, tmp2
 
-  def two_point_crossover(self, pool):
+  def two_point_crossover(self, nextge):
     indvlist = []
-    for (child1, child2) in zip(pool[0], pool[1]):
+    for (child1, child2) in zip(nextge[0:Const.GENERATION_SIZE/2], nextge[Const.GENERATION_SIZE/2:]):
       if random.random() < Const.CROSSOVER_RATE:
         (child1.chromosome, child2.chromosome) = self.__tpc(child1.chromosome, child2.chromosome)
       indvlist.append(child1)  
