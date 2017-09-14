@@ -10,6 +10,12 @@ class Operators(object):
   def __init__(self):
     self = self
 
+  def clacvalue(self, chromosome, valuearray):
+    return np.sum(chromosome*valuearray)
+
+  def calcloadings(self, chromosome, loadarray):
+    return np.sum(chromosome*loadarray)
+
   #############
   # Selection #
   #############
@@ -22,9 +28,9 @@ class Operators(object):
       samples = random.sample(presentge, Const.TOURNAMENT_SIZE)
 
       for indv in samples:
-        if indv.getvalue() > maxvalue:
+        if indv.value > maxvalue:
           tmp = indv
-          maxvalue = indv.getvalue()
+          maxvalue = indv.value
 
       nextge.append(tmp)
 
@@ -49,13 +55,20 @@ class Operators(object):
     tmpch1[point1:point2], tmpch2[point1:point2] = tmpch2[point1:point2].copy(), tmpch1[point1:point2].copy()
     return tmpch1, tmpch2
 
-  def two_point_crossover(self, nextge):
+  def two_point_crossover(self, nextge, loadarray, capacity):
     indvlist = []
     for (child1, child2) in zip(nextge[0:Const.GENERATION_SIZE/2], nextge[Const.GENERATION_SIZE/2:]):
       tmp1 = copy.deepcopy(child1)
       tmp2 = copy.deepcopy(child2)
+
       if random.random() < Const.CROSSOVER_RATE:
-        (tmp1.chromosome, tmp2.chromosome) = self.__tpc(child1.chromosome, child2.chromosome)
+        while True:
+          (tmp1.chromosome, tmp2.chromosome) = self.__tpc(child1.chromosome, child2.chromosome)
+          tmp1.loadings = self.calcloadings(tmp1.chromosome, loadarray)
+          tmp2.loadings = self.calcloadings(tmp2.chromosome, loadarray)
+          if tmp1.loadings <= capacity and tmp2.loadings <= capacity:
+            break
+
       indvlist.append(tmp1)  
       indvlist.append(tmp2)  
     return indvlist
@@ -70,11 +83,18 @@ class Operators(object):
             tmp[i] = type(chromosome[i])(not chromosome[i])
     return tmp
 
-  def mutate(self, indvlist):
+  def mutate(self, indvlist, loadarray, capacity):
     mutants = []
+
     for mut in indvlist:
       tmpmut = copy.deepcopy(mut)
       if random.random() < Const.MUTATION_RATE:
         tmpmut.chromosome = self.__mutate_flip_bit(mut.chromosome)
-      mutants.append(tmpmut)
+
+      tmpmut.loadings = self.calcloadings(tmpmut.chromosome, loadarray)
+      if tmpmut.loadings <= capacity:
+        mutants.append(tmpmut)
+      else:
+        mutants.append(mut)
+        
     return mutants
