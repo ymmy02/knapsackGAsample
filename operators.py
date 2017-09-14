@@ -61,16 +61,27 @@ class Operators(object):
       tmp1 = copy.deepcopy(child1)
       tmp2 = copy.deepcopy(child2)
 
+      isloopmax = False
       if random.random() < Const.CROSSOVER_RATE:
+        
+        loopcount = 0
         while True:
           (tmp1.chromosome, tmp2.chromosome) = self.__tpc(child1.chromosome, child2.chromosome)
           tmp1.loadings = self.calcloadings(tmp1.chromosome, loadarray)
           tmp2.loadings = self.calcloadings(tmp2.chromosome, loadarray)
-          if tmp1.loadings <= capacity and tmp2.loadings <= capacity:
+          if (tmp1.loadings <= capacity and tmp2.loadings <= capacity):
             break
+          if loopcount > len(loadarray):
+            isloopmax = True
+            break
+          loopcount += 1
 
-      indvlist.append(tmp1)  
-      indvlist.append(tmp2)  
+      if isloopmax:
+        indvlist.append(child1)  
+        indvlist.append(child2)  
+      else:
+        indvlist.append(tmp1)  
+        indvlist.append(tmp2)  
     return indvlist
 
   ############
