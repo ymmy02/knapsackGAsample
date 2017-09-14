@@ -7,31 +7,41 @@ Language : Python
 ## Input
 
 ```
-capacity > (Int)
-Items > (weight), (value) 
+capacity : (Int)
+number of items : (Int)
+weight : (Int)
+weight : (Int)
+...
+weight : (Int)
+value : (Int)
+value : (Int)
+...
+value : (Int)
 ```
 
-ex)  
+ex  
 ```
-capacity > 15
-items > 4, 4
-items > 10, 11
-items > 3, 6
-items > 2, 1
-items > 7, 9
+capacity : 19
+number of items : 5
+weight : 3
+weight : 10
+weight : 7
+weight : 2
+weight : 11
+value : 3
+value : 9
+value : 10
+value : 3
+value : 15
 ```
 
 ## Output
 
+ex
 ```
-amount >
-value  > 
-result >
-```
-
-ex)  
-```
-amount > 14
-value  > 19
-result > [1, 0, 1, 0, 1]
+########## result ##########
+Last Generation
+Best value : 25.0
+Chromosome
+[0 0 1 0 1]
 ```
