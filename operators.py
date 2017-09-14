@@ -36,8 +36,8 @@ class Operators(object):
 
   def __tpc(self, chromosome1, chromosome2):
     size = len(chromosome1)
-    tmp1 = chromosome1.copy()
-    tmp2 = chromosome2.copy()
+    tmpch1 = chromosome1.copy()
+    tmpch2 = chromosome2.copy()
     point1 = random.randint(1, size)
     point2 = random.randint(1, size-1)
     if point2 >= point1:
@@ -46,16 +46,18 @@ class Operators(object):
         point1, point2 = point2, point1
     #print point1
     #print point2
-    tmp1[point1:point2], tmp2[point1:point2] = tmp2[point1:point2].copy(), tmp1[point1:point2].copy()
-    return tmp1, tmp2
+    tmpch1[point1:point2], tmpch2[point1:point2] = tmpch2[point1:point2].copy(), tmpch1[point1:point2].copy()
+    return tmpch1, tmpch2
 
   def two_point_crossover(self, nextge):
     indvlist = []
     for (child1, child2) in zip(nextge[0:Const.GENERATION_SIZE/2], nextge[Const.GENERATION_SIZE/2:]):
+      tmp1 = copy.deepcopy(child1)
+      tmp2 = copy.deepcopy(child2)
       if random.random() < Const.CROSSOVER_RATE:
-        (child1.chromosome, child2.chromosome) = self.__tpc(child1.chromosome, child2.chromosome)
-      indvlist.append(child1)  
-      indvlist.append(child2)  
+        (tmp1.chromosome, tmp2.chromosome) = self.__tpc(child1.chromosome, child2.chromosome)
+      indvlist.append(tmp1)  
+      indvlist.append(tmp2)  
     return indvlist
 
   ############
@@ -71,7 +73,8 @@ class Operators(object):
   def mutate(self, indvlist):
     mutants = []
     for mut in indvlist:
+      tmpmut = copy.deepcopy(mut)
       if random.random() < Const.MUTATION_RATE:
-        mut.chromosome = self.__mutate_flip_bit(mut.chromosome)
-      mutants.append(mut)
+        tmpmut.chromosome = self.__mutate_flip_bit(mut.chromosome)
+      mutants.append(tmpmut)
     return mutants
