@@ -60,8 +60,6 @@ def main():
     print "Best value : " + str(best_indv.getvalue())
     print "Chromosome"
     print best_indv.chromosome
-    # test
-    print "Sum : " + str(s)
 
     loopcount += 1
 
