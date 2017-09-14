@@ -1,6 +1,6 @@
 class Const(object):
 
-  NLOOP = 200
+  NLOOP = 100
   GENERATION_SIZE = 500
   TOURNAMENT_SIZE = 3
   CROSSOVER_RATE = 0.8
