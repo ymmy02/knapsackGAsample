@@ -5,13 +5,15 @@ from const import Const
 from individual import Individual
 from operators import Operators
 from selection import Selection
+from crossover import Crossover
 
 def main():
   
-  presentge = []
-  nextge = []
+  parents = []
+  offsprings = []
   ops = Operators()
   slc = Selection()
+  crs = Crossover()
   random.seed()
 
   # Input
@@ -31,36 +33,33 @@ def main():
 
   # Initialize
   for i in range(Const.GENERATION_SIZE):
-    while True:
-      indv = Individual(chsize)
-      indv.loadings = ops.calcloadings(indv.chromosome, loadarray)
-      if indv.loadings <= capacity:
-        break
-      indv = None
-    indv.value = ops.calcloadings(indv.chromosome, valuearray)
-    presentge.append(indv)
+    indv = Individual(chsize)
+    indv.loadings = calcloadings(indv, loadarray)
+    indv.value = calcvalue(indv, valuearray, capacity)
+    parents.append(indv)
   
   loopcount = 0
   while not does_end(loopcount):
 
     # Selection
-    nextge = slc.select_tounament(presentge)
+    offsprings = slc.select_tounament(parents)
     
     # Crossover
-    nextge = ops.two_point_crossover(nextge, loadarray, capacity)
+    offsprings = crs.two_point_crossover(offsprings)
 
     # Mutation
-    nextge = ops.mutate(nextge, loadarray, capacity)
+    offsprings = ops.mutate(offsprings, loadarray, capacity)
 
     # Change Generation
-    presentge = nextge[:]
+    parents = offsprings[:]
 
     # Calculate Value
-    best_indv = presentge[0]
-    best_indv.value = ops.calcloadings(best_indv.chromosome, valuearray)
-    s = 0
-    for indv in presentge:
-      indv.value = ops.calcloadings(indv.chromosome, valuearray)
+    best_indv = parents[0]
+    best_indv.loadings = calcloadings(best_indv, loadarray)
+    best_indv.value = calcvalue(best_indv, valuearray, capacity)
+    for indv in parents:
+      indv.loadings = calcloadings(indv, loadarray)
+      indv.value = calcvalue(indv, valuearray, capacity)
       if indv.value > best_indv.value:
         best_indv = indv
 
