@@ -1,5 +1,4 @@
 import random
-import copy
 import numpy as np
 
 from individual import Individual
