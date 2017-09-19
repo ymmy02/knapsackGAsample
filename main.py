@@ -1,11 +1,13 @@
 import random
 import numpy as np
 
-from const import Const
 from individual import Individual
 from selection import Selection
 from crossover import Crossover
 from mutation import Mutation
+
+POPULATION = 300
+LOOPMAX = 100
 
 def main():
   
@@ -33,7 +35,7 @@ def main():
     valuearray[i] = int(input("value : "))
 
   # Initialize
-  for i in range(Const.GENERATION_SIZE):
+  for i in range(POPULATION):
     indv = Individual(chsize)
     indv.loadings = calcloadings(indv, loadarray)
     indv.value = calcvalue(indv, valuearray, capacity)
@@ -94,7 +96,7 @@ def penalty(capacity, loadings, rate):
     return 0
 
 def does_end(loopcount):
-  if loopcount > Const.NLOOP:
+  if loopcount > LOOPMAX:
     return True
   return False
 
