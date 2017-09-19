@@ -3,17 +3,18 @@ import numpy as np
 
 from const import Const
 from individual import Individual
-from operators import Operators
 from selection import Selection
 from crossover import Crossover
+from mutation import Mutation
 
 def main():
   
   parents = []
   offsprings = []
-  ops = Operators()
   slc = Selection()
   crs = Crossover()
+  mut = Mutation()
+
   random.seed()
 
   # Input
@@ -48,7 +49,7 @@ def main():
     offsprings = crs.two_point_crossover(offsprings)
 
     # Mutation
-    offsprings = ops.mutate(offsprings, loadarray, capacity)
+    offsprings = mut.mutate(offsprings)
 
     # Change Generation
     parents = offsprings[:]
