@@ -81,6 +81,18 @@ def main():
   print best_indv.chromosome
 
 
+def calcloadings(indv, loadarray):
+  return np.sum(indv.chromosome*loadarray)
+
+def calcvalue(indv, valuearray, capacity, penalty_rate=2.0):
+  return np.sum(indv.chromosome*valuearray) - penalty(capacity, indv.loadings, penalty_rate)
+
+def penalty(capacity, loadings, rate):
+  if loadings > capacity:
+    return rate * (loadings-capacity)**2
+  else:
+    return 0
+
 def does_end(loopcount):
   if loopcount > Const.NLOOP:
     return True
