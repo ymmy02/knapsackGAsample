@@ -17,26 +17,6 @@ class Operators(object):
     return np.sum(chromosome*loadarray)
 
   #############
-  # Selection #
-  #############
-
-  def select_tounament(self, presentge):
-    nextge = []
-
-    for _ in range(Const.GENERATION_SIZE):
-      maxvalue = 0
-      samples = random.sample(presentge, Const.TOURNAMENT_SIZE)
-
-      for indv in samples:
-        if indv.value > maxvalue:
-          tmp = indv
-          maxvalue = indv.value
-
-      nextge.append(tmp)
-
-    return nextge 
-
-  #############
   # Crossover #
   #############
 

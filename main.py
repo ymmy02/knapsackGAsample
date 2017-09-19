@@ -4,12 +4,14 @@ import numpy as np
 from const import Const
 from individual import Individual
 from operators import Operators
+from selection import Selection
 
 def main():
   
   presentge = []
   nextge = []
   ops = Operators()
+  slc = Selection()
   random.seed()
 
   # Input
@@ -42,7 +44,7 @@ def main():
   while not does_end(loopcount):
 
     # Selection
-    nextge = ops.select_tounament(presentge)
+    nextge = slc.select_tounament(presentge)
     
     # Crossover
     nextge = ops.two_point_crossover(nextge, loadarray, capacity)
