@@ -2,9 +2,9 @@ import random
 import numpy as np
 
 from individual import Individual
-from selection import Selection
-from crossover import Crossover
-from mutation import Mutation
+import selection as slc
+import crossover as crs
+import mutation as mut
 
 POPULATION = 300
 LOOPMAX = 100
@@ -13,9 +13,6 @@ def main():
   
   parents = []
   offsprings = []
-  slc = Selection()
-  crs = Crossover()
-  mut = Mutation()
 
   random.seed()
 
