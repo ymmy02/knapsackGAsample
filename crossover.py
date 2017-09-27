@@ -11,8 +11,8 @@ def _tpc(chromosome1, chromosome2):
   size = len(chromosome1)
   tmpch1 = chromosome1.copy()
   tmpch2 = chromosome2.copy()
-  point1 = random.randint(1, size)
-  point2 = random.randint(1, size-1)
+  point1 = random.randint(0, size)
+  point2 = random.randint(0, size-1)
   if point2 >= point1:
     point2 += 1
   else:  # Swap the two points
